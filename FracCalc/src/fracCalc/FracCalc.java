@@ -1,3 +1,13 @@
+/*
+ * Author: derfel terciano
+ * 
+ * Version:1
+ * 
+ * 
+ * calculates fractions that are improper and mixed and reduces everything
+ * 
+ * 
+ */
 package fracCalc;
 import java.util.*;
 public class FracCalc {
