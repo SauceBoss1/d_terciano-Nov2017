@@ -1,3 +1,11 @@
+/*
+ * @author Derfel Terciano
+ * 
+ * Version: 1
+ * 
+ * 
+ * Chat Bot
+ */
 
 public class Magpie2 {
 
