@@ -51,6 +51,9 @@ public class FracCalc {
 		return whole+" "+numerator+" "+ denominator;
 	}
 	
+	// TODO: Fill in the space below with any helper methods that you think you will
+	// need
+	
 	public static String[] parseFrac(String input) {
 		String[] result = new String[3];
 		if (input.indexOf("_")>0) {
@@ -74,8 +77,5 @@ public class FracCalc {
 		return result;
 	}
 	
-
-	// TODO: Fill in the space below with any helper methods that you think you will
-	// need
 
 }
