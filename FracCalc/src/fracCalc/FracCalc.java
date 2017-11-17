@@ -26,6 +26,9 @@ public class FracCalc {
 				end=true;
 			} else {
 				System.out.println(produceAnswer(userFraction));
+				
+				
+				
 			}
 		}
 	}
@@ -73,6 +76,15 @@ public class FracCalc {
 				result[1]="0";
 				result[2]="1";
 			}
+		}
+		return result;
+	}
+	
+	
+	public static int[] convStrtoInt(String[] input) {
+		int[] result = new int[3];
+		for (int i=0; i <input.length;i++) {
+			result[i]=Integer.parseInt(input[i]);
 		}
 		return result;
 	}
