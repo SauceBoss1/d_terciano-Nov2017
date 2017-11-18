@@ -89,5 +89,78 @@ public class FracCalc {
 		return result;
 	}
 	
+	
+	// Converts a Mixed Fraction into an Improper Fraction
+	public static int[] toImproperFrac(int x, int y, int z) {
+		int[] result = new int[2];
+		int numerator = (x * z) + y;
+		result[0]=numerator;
+		result[1]=z;
+		return result; 
+	}
+	
+	public static int[] addOrSubtractFrac(int[] frac1, int[] frac2, String operation) {
+		int[] result = new int[2];
+		if (operation.equals("+")) {
+			result[0]=(frac1[0]*frac2[1])+(frac2[0]*frac1[1]);
+		} else {
+			result[0]=(frac1[0]*frac2[1])-(frac2[0]*frac1[1]);
+		}
+		result[1]=(frac1[1]*frac2[1]);
+		return result;
+	}
+	
+	public static int[] multOrDivFrac(int[] frac1, int[] frac2, String operation) {
+		int[] result = new int[2];
+		if (operation.equals("*")) {
+			result[0]=frac1[0]*frac2[0];
+			result[1]=frac1[1]*frac2[1];
+		}else {
+			result[0]=frac1[0]*frac2[1];
+			result[1]=frac1[1]*frac2[0];
+		}
+		return result;
+	}
+	public static boolean isDivisibleBy(int a, int b) {
+		if (b == 0) {
+			throw new IllegalArgumentException("You can't divide by zero!");
+		}
+		if (a % b == 0) {
+			return true;
+		} else {
+			return false;// Checks if inputs are divisible to each other
+		}
+	}
+	public static boolean isPrime(int num) {
+		for (int i = 2; i < num; i++) {
+			if (isDivisibleBy(num, i) == true) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public static int gcf(int num1, int num2) {
+		if (isPrime(num1) && isPrime(num2)) {
+			return 1;
+		}
+		while (num1 != 0 && num2 != 0) {
+			int num3 = num2;
+			num2 = num1 % num2;
+			num1 = num3;
+		}
+		return num1 + num2;
+	}
+	
+	public static int[] simplifyFrac(int[] fracInput) {
+		int[] result = new int[2];
+		int divisibleNum = gcf(fracInput[0],fracInput[1]);
+		result[0]=fracInput[0]/divisibleNum;
+		result[1]=fracInput[1]/divisibleNum;
+		return result;
+	}
+	
+	
+	
+
 
 }
