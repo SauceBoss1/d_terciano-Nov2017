@@ -95,10 +95,14 @@ public class FracCalc {
 		String result = "";
 		if (inputFrac.length==3) {
 			result= inputFrac[0]+"_"+inputFrac[1]+"/"+inputFrac[2];
+		}else if(inputFrac.length==2 && inputFrac[1]==1) {
+			result= inputFrac[0]+"";
 		}else if(inputFrac.length==2) {
 			result= inputFrac[0]+"/"+inputFrac[1];
-		} else if(inputFrac.length==2 && inputFrac[1]==1) {
-			result= inputFrac[0]+"";
+		}
+			
+		if(result.equals("0/1")) {
+			result="0";
 		}
 		return result;
 	}
