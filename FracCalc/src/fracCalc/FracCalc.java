@@ -101,8 +101,12 @@ public class FracCalc {
 			result= inputFrac[0]+"/"+inputFrac[1];
 		}
 			
-		if(result.equals("0/1")) {
+		if(result.equals("0/1")||(inputFrac.length==2 && inputFrac[0]==0)) {
 			result="0";
+		}else if(inputFrac.length==3 && inputFrac[1]==0) {
+			result=inputFrac[0]+"";
+		}else if(inputFrac.length==2 && inputFrac[0]==inputFrac[1]) {
+			result=1+"";
 		}
 		return result;
 	}
@@ -210,8 +214,11 @@ public class FracCalc {
 		if (result[0]<0) {
 			absOfNum=result[0]*-1;
 		}
-		if (absOfNum>result[1]) {
+		if ( result[0]>result[1]||absOfNum>result[1]) {
 			int[] resultInMixed= toMixedNum(result);
+			if(resultInMixed[2]<0) {
+				resultInMixed[2]*=-1;
+			}
 			return resultInMixed;
 		}else {
 			return result;
