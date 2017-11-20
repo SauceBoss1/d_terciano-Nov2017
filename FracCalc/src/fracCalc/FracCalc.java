@@ -206,12 +206,17 @@ public class FracCalc {
 		result[0]=fracInput[0]/divisibleNum;
 		result[1]=fracInput[1]/divisibleNum;
 		
-		if (result[0]>result[1]) {
-			int[] resultInMixed= toMixedNum(fracInput);
+		int absOfNum= 0;
+		if (result[0]<0) {
+			absOfNum=result[0]*-1;
+		}
+		if (absOfNum>result[1]) {
+			int[] resultInMixed= toMixedNum(result);
 			return resultInMixed;
 		}else {
 			return result;
 		}
+		//return result;
 	}
 	
 	
