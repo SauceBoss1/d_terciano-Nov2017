@@ -1,5 +1,5 @@
 /*
- * Author: derfel terciano
+ * @author derfel terciano
  * 
  * Version:1
  * 
