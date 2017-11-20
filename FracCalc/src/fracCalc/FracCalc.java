@@ -135,6 +135,18 @@ public class FracCalc {
 		result[1]=z;
 		return result; 
 	}
+	public static int[] toMixedNum(int[] inputFrac) {
+		int[] mixedFracResult= new int[3];
+		int modOfFrac = inputFrac[0] % inputFrac[1];
+		int wholeNum = inputFrac[0] / inputFrac[1];
+		if(modOfFrac<0) {
+			modOfFrac*=-1;
+		}
+		mixedFracResult[0]=wholeNum;
+		mixedFracResult[1]=modOfFrac;
+		mixedFracResult[2]=inputFrac[1];
+		return mixedFracResult;// Converts an Improper Fraction into a Mixed Fractions
+	}
 	
 	public static int[] addOrSubtractFrac(int[] frac1, int[] frac2, String operation) {
 		int[] result = new int[2];
@@ -193,7 +205,13 @@ public class FracCalc {
 		int divisibleNum = gcf(fracInput[0],fracInput[1]);
 		result[0]=fracInput[0]/divisibleNum;
 		result[1]=fracInput[1]/divisibleNum;
-		return result;
+		
+		if (result[0]>result[1]) {
+			int[] resultInMixed= toMixedNum(fracInput);
+			return resultInMixed;
+		}else {
+			return result;
+		}
 	}
 	
 	
