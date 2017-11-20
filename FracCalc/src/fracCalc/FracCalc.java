@@ -47,11 +47,22 @@ public class FracCalc {
 	public static String produceAnswer(String input) {
 		// TODO: Implement this function to produce the solution to the input
 		String[] splitInput = input.split(" ");
-		String[] parsedResult = parseFrac(splitInput[2]);
-		String whole = "whole:"+ parsedResult[0];
-		String numerator = "numerator:"+ parsedResult[1];
-		String denominator = "denominator:"+ parsedResult[2];
-		return whole+" "+numerator+" "+ denominator;
+		String operation = splitInput[1];
+		int[] frac1= toImproperFrac(convStrtoInt(parseFrac(splitInput[0])));
+		int[] frac2= toImproperFrac(convStrtoInt(parseFrac(splitInput[2])));
+		int[] result = null;
+		if (operation.equals("+")) {
+			result=addOrSubtractFrac(frac1,frac2,"+");
+		}else if(operation.equals("-")) {
+			result=addOrSubtractFrac(frac1,frac2,"-");
+		}else if(operation.equals("*")) {
+			result = multOrDivFrac(frac1,frac2,"*");
+		}else {
+			result = multOrDivFrac(frac1,frac2,"/");
+		}
+		String resultToStringForm=formIntToString(result);
+		return resultToStringForm;
+		
 	}
 	
 	// TODO: Fill in the space below with any helper methods that you think you will
@@ -80,9 +91,21 @@ public class FracCalc {
 		return result;
 	}
 	
+	public static String formIntToString (int[] inputFrac) {
+		String result = "";
+		if (inputFrac.length==3) {
+			result= inputFrac[0]+"_"+inputFrac[1]+"/"+inputFrac[2];
+		}else if(inputFrac.length==2) {
+			result= inputFrac[0]+"/"+inputFrac[1];
+		} else if(inputFrac.length==2 && inputFrac[1]==1) {
+			result= inputFrac[0]+"";
+		}
+		return result;
+	}
+	
 	
 	public static int[] convStrtoInt(String[] input) {
-		int[] result = new int[3];
+		int[] result = new int[input.length];
 		for (int i=0; i <input.length;i++) {
 			result[i]=Integer.parseInt(input[i]);
 		}
@@ -91,9 +114,19 @@ public class FracCalc {
 	
 	
 	// Converts a Mixed Fraction into an Improper Fraction
-	public static int[] toImproperFrac(int x, int y, int z) {
+	public static int[] toImproperFrac(int[] inputFrac) {
 		int[] result = new int[2];
-		int numerator = (x * z) + y;
+		int x = inputFrac[0];
+		int y = inputFrac[1];
+		int z = inputFrac[2];
+		int numerator =0;
+		if(x<0) {
+			x*=-1;
+			numerator = (x * z) + y;
+			numerator*=-1;
+		}else {
+			numerator = (x * z) + y;
+		}
 		result[0]=numerator;
 		result[1]=z;
 		return result; 
@@ -103,11 +136,11 @@ public class FracCalc {
 		int[] result = new int[2];
 		if (operation.equals("+")) {
 			result[0]=(frac1[0]*frac2[1])+(frac2[0]*frac1[1]);
-		} else {
+		} else if(operation.equals("-")){
 			result[0]=(frac1[0]*frac2[1])-(frac2[0]*frac1[1]);
 		}
 		result[1]=(frac1[1]*frac2[1]);
-		return result;
+		return simplify(result);
 	}
 	
 	public static int[] multOrDivFrac(int[] frac1, int[] frac2, String operation) {
@@ -115,11 +148,11 @@ public class FracCalc {
 		if (operation.equals("*")) {
 			result[0]=frac1[0]*frac2[0];
 			result[1]=frac1[1]*frac2[1];
-		}else {
+		}else if (operation.equals("/")){
 			result[0]=frac1[0]*frac2[1];
 			result[1]=frac1[1]*frac2[0];
 		}
-		return result;
+		return simplify(result);
 	}
 	public static boolean isDivisibleBy(int a, int b) {
 		if (b == 0) {
@@ -151,7 +184,7 @@ public class FracCalc {
 		return num1 + num2;
 	}
 	
-	public static int[] simplifyFrac(int[] fracInput) {
+	public static int[] simplify(int[] fracInput) {
 		int[] result = new int[2];
 		int divisibleNum = gcf(fracInput[0],fracInput[1]);
 		result[0]=fracInput[0]/divisibleNum;
