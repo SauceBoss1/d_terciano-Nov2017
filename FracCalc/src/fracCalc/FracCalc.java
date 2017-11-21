@@ -193,9 +193,9 @@ public class FracCalc {
 		return true;
 	}
 	public static int gcf(int num1, int num2) {
-		if (isPrime(num1) && isPrime(num2)) {
+		/*if (isPrime(num1) && isPrime(num2)) {
 			return 1;
-		}
+		}*/
 		while (num1 != 0 && num2 != 0) {
 			int num3 = num2;
 			num2 = num1 % num2;
