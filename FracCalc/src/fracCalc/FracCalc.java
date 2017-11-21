@@ -184,14 +184,6 @@ public class FracCalc {
 			return false;// Checks if inputs are divisible to each other
 		}
 	}
-	public static boolean isPrime(int num) {
-		for (int i = 2; i < num; i++) {
-			if (isDivisibleBy(num, i) == true) {
-				return false;
-			}
-		}
-		return true;
-	}
 	public static int gcf(int num1, int num2) {
 		/*if (isPrime(num1) && isPrime(num2)) {
 			return 1;
