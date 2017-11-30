@@ -47,10 +47,33 @@ public class FracCalc {
 	public static String produceAnswer(String input) {
 		// TODO: Implement this function to produce the solution to the input
 		String[] splitInput = input.split(" ");
-		String operation = splitInput[1];
+		String result = null;
+		int indexToReturn=0;
+		for(int i =0; i < splitInput.length; i++) {
+			if( splitInput[i].equals("+")||splitInput[i].equals("-")||splitInput[i].equals("*")||splitInput[i].equals("/")) {
+				if (splitInput[i].equals("+")) {
+					result=addOrSubtractFrac(splitInput[i-1],splitInput[i+1],"+");
+				}else if(splitInput[i].equals("-")) {
+					result=addOrSubtractFrac(splitInput[i-1],splitInput[i+1],"-");
+				}else if(splitInput[i].equals("*")) {
+					result = multOrDivFrac(splitInput[i-1],splitInput[i+1],"*");
+				}else {
+					result = multOrDivFrac(splitInput[i-1],splitInput[i+1],"/");
+				}
+				if(i<splitInput.length) {
+					splitInput[i+1]=result;
+				} else {
+					splitInput[i]=result;
+				}
+			}
+
+			indexToReturn = splitInput.length-1;
+		}
+		return splitInput[indexToReturn];
+		
+		/*String operation = splitInput[1];
 		int[] frac1= toImproperFrac(convStrtoInt(parseFrac(splitInput[0])));
 		int[] frac2= toImproperFrac(convStrtoInt(parseFrac(splitInput[2])));
-		int[] result = null;
 		if (operation.equals("+")) {
 			result=addOrSubtractFrac(frac1,frac2,"+");
 		}else if(operation.equals("-")) {
@@ -60,8 +83,7 @@ public class FracCalc {
 		}else {
 			result = multOrDivFrac(frac1,frac2,"/");
 		}
-		String resultToStringForm=formIntToString(result);
-		return resultToStringForm;
+		return result;*/
 		
 	}
 	
@@ -91,7 +113,7 @@ public class FracCalc {
 		return result;
 	}
 	
-	public static String formIntToString (int[] inputFrac) {
+	public static String toString (int[] inputFrac) {
 		String result = "";
 		if (inputFrac.length==3) {
 			result= inputFrac[0]+"_"+inputFrac[1]+"/"+inputFrac[2];
@@ -122,6 +144,7 @@ public class FracCalc {
 	
 	
 	// Converts a Mixed Fraction into an Improper Fraction
+	//TODO make less redundant
 	public static int[] toImproperFrac(int[] inputFrac) {
 		int[] result = new int[2];
 		int x = inputFrac[0];
@@ -130,8 +153,7 @@ public class FracCalc {
 		int numerator =0;
 		if(x<0) {
 			x*=-1;
-			numerator = (x * z) + y;
-			numerator*=-1;
+			numerator = ((x * z) + y)*-1;
 		}else {
 			numerator = (x * z) + y;
 		}
@@ -152,18 +174,26 @@ public class FracCalc {
 		return mixedFracResult;// Converts an Improper Fraction into a Mixed Fractions
 	}
 	
-	public static int[] addOrSubtractFrac(int[] frac1, int[] frac2, String operation) {
+	public static String addOrSubtractFrac(String fracString1, String fracString2, String operation) {
+		int[] frac1= toImproperFrac(convStrtoInt(parseFrac(fracString1)));
+		int[] frac2= toImproperFrac(convStrtoInt(parseFrac(fracString2)));
 		int[] result = new int[2];
-		if (operation.equals("+")) {
-			result[0]=(frac1[0]*frac2[1])+(frac2[0]*frac1[1]);
-		} else if(operation.equals("-")){
-			result[0]=(frac1[0]*frac2[1])-(frac2[0]*frac1[1]);
+		int mainOper1=(frac1[0]*frac2[1]);
+		int mainOper2=-(frac2[0]*frac1[1]);
+		if (operation.equals("-")) {
+			result[0]=mainOper1+mainOper2;
+		} else{
+			result[0]=mainOper1-mainOper2;
 		}
 		result[1]=(frac1[1]*frac2[1]);
-		return simplify(result);
+		return toString(simplify(result));
 	}
 	
-	public static int[] multOrDivFrac(int[] frac1, int[] frac2, String operation) {
+
+	
+	public static String multOrDivFrac(String fracString1, String fracString2, String operation) {
+		int[] frac1= toImproperFrac(convStrtoInt(parseFrac(fracString1)));
+		int[] frac2= toImproperFrac(convStrtoInt(parseFrac(fracString2)));
 		int[] result = new int[2];
 		if (operation.equals("*")) {
 			result[0]=frac1[0]*frac2[0];
@@ -172,8 +202,10 @@ public class FracCalc {
 			result[0]=frac1[0]*frac2[1];
 			result[1]=frac1[1]*frac2[0];
 		}
-		return simplify(result);
+		return toString(simplify(result));
 	}
+	
+	
 	public static boolean isDivisibleBy(int a, int b) {
 		if (b == 0) {
 			throw new IllegalArgumentException("You can't divide by zero!");
