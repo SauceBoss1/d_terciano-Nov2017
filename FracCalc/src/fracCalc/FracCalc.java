@@ -48,7 +48,6 @@ public class FracCalc {
 		// TODO: Implement this function to produce the solution to the input
 		String[] splitInput = input.split(" ");
 		String result = null;
-		int indexToReturn=0;
 		for(int i =0; i < splitInput.length; i++) {
 			if( splitInput[i].equals("+")||splitInput[i].equals("-")||splitInput[i].equals("*")||splitInput[i].equals("/")) {
 				if (splitInput[i].equals("+")) {
@@ -67,9 +66,8 @@ public class FracCalc {
 				}
 			}
 
-			indexToReturn = splitInput.length-1;
 		}
-		return splitInput[indexToReturn];
+		return splitInput[splitInput.length-1];
 		
 		/*String operation = splitInput[1];
 		int[] frac1= toImproperFrac(convStrtoInt(parseFrac(splitInput[0])));
